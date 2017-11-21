@@ -1,0 +1,31 @@
+month,day,dow,link_it,lec,topic,action
+January,9,Tuesday,FALSE,lec01,"intro, syllabus, github",
+January,11,Thursday,FALSE,lec02,github,
+January,16,Tuesday,FALSE,lec03,Rmarkdown,
+January,18,Thursday,FALSE,lec04,coding,
+January,23,Tuesday,FALSE,lec05,functions,
+January,25,Thursday,FALSE,lec06,regression basics,
+January,30,Tuesday,FALSE,lec07,regression and probability,Chapter 1
+February,1,Thursday,FALSE,lec08,,
+February,6,Tuesday,FALSE,lec09,regression and probability,Chapter 2
+February,8,Thursday,FALSE,lec10,,
+February,13,Tuesday,FALSE,lec11,model selection,Chapter 2
+February,15,Thursday,FALSE,lec12,,
+February,20,Tuesday,FALSE,lec13,smoothing,Chapter 4
+February,22,Thursday,FALSE,lec14,,
+February,27,Tuesday,FALSE,lec15,simulation and bootstrap,"Chapter 5, 6, and App. O"
+March,1,Thursday,FALSE,lec16,,
+March,6,Tuesday,FALSE,lec17,heterskedasticity,Chapter 7
+March,8,Thursday,FALSE,lec18,,
+March,20,Tuesday,FALSE,lec19,additive models,Chapter 9
+March,22,Thursday,FALSE,lec20,,
+March,27,Tuesday,FALSE,lec21,classification,
+March,29,Thursday,FALSE,lec22,,
+April,3,Tuesday,FALSE,lec23,logistic regression,Chapter 11
+April,5,Thursday,FALSE,lec24,,
+April,10,Tuesday,FALSE,lec25,glms and gams,Chapter 12
+April,12,Thursday,FALSE,lec26,,
+April,17,Tuesday,FALSE,lec27,trees,Chapter 13
+April,19,Thursday,FALSE,lec28,,
+April,24,Tuesday,FALSE,lec29,kernels,
+April,26,Thursday,FALSE,lec30,,
