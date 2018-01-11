@@ -3,8 +3,7 @@ library(magrittr) # CRAN
 library(stringr) # CRAN
 library(git2r) # CRAN
 
-org_name = "STATS-432Sp2017"
-token_path = "~/Documents/Work/Teaching and TA/s432sp2017/"
+org_name = "STATS-432Sp2018"
 
 
 pushAllRepos <- function(dir.path, # no trailing /
@@ -26,7 +25,7 @@ addFiles2Repos <- function(repo.prefix, commit.message, pathToStarterRepo, files
                            org.name = org_name,
                            token.path = token_path){
   
-  token = readLines(paste0(token.path, "github_token.txt"))
+  token = readLines(token.path)
   exist.repos = gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
   repo_names = sapply(exist.repos, function(x) x$name)
   selected_repos = str_detect(repo_names,repo.prefix) %>% repo_names[.]
@@ -68,7 +67,7 @@ createTeamsAndRepos <- function(github.accounts, assigned.team.number, prefix,
                                 starter.repo.suffix = '0',
                                 org.name = org_name, 
                                 token.path = token_path){
-  token = readLines(paste0(token.path, "github_token.txt"))
+  token = readLines(token.path)
   exist.repos = gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
   exist.repo.names = sapply(exist.repos, function(x) x$name)
   starter.repo = grepl(paste0(prefix, starter.repo.suffix), exist.repo.names)
@@ -111,7 +110,7 @@ createTeams <- function(github.accounts, assigned.team.number, team.prefix,
                         org.name = org_name, 
                         token.path = token_path){
   
-  token = readLines(paste0(token.path, "github_token.txt"))
+  token = readLines(token.path)
   exist.teams = gh("/orgs/:org/teams", org = org.name, 
                    .token = token, .limit=Inf) # gets all team names from github
   exist.ids = sapply(exist.teams, function(x) x$id)
@@ -171,7 +170,7 @@ grab_repos <- function(repo_pattern, targetpath="./", verbose=TRUE,
                        token.path = token_path){
   stopifnot(!missing(repo_pattern))
   
-  token = readLines(paste0(token.path, "github_token.txt"))
+  token = readLines(token.path)
   
   exist.repos = gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
   exist.repo.names = sapply(exist.repos, function(x) x$name)
