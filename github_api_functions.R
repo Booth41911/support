@@ -15,21 +15,24 @@ pushAllRepos <- function(dir.path, # no trailing /
   repos = lapply(exist.repos, repository)
   for(repo in seq_along(repos)){
     cat("Pushing", exist.repos[repo], "...\n")
-    try(push(repos[[repo]], credentials = cred_user_pass(gh.user.name,gh.passwd)))
+    try(git2r::push(repos[[repo]], 
+                    credentials = cred_user_pass(gh.user.name,gh.passwd)))
   }
 }
 
-addFiles2Repos <- function(repo.prefix, commit.message, pathToStarterRepo, filesToCopy,
+addFiles2Repos <- function(repo.prefix, commit.message, pathToStarterRepo, 
+                           filesToCopy,
                            starter.repo.suffix = '0',
                            gh.user.name, gh.passwd,
                            org.name = org_name,
                            token.path = token_path){
   
   token = readLines(token.path)
-  exist.repos = gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
+  exist.repos = gh::gh("/orgs/:org/repos", org = org.name, 
+                       .token = token, .limit=Inf) 
   repo_names = sapply(exist.repos, function(x) x$name)
-  selected_repos = str_detect(repo_names,repo.prefix) %>% repo_names[.]
-  selected_repos = selected_repos[!grepl(starter.repo.suffix,selected_repos)]
+  selected_repos = stringr::str_detect(repo_names,repo.prefix) %>% repo_names[.]
+  selected_repos = selected_repos[!grepl(starter.repo.suffix, selected_repos)]
   
   for(repo in selected_repos){
     cat("Updating", repo, "...\n")
@@ -39,7 +42,7 @@ addFiles2Repos <- function(repo.prefix, commit.message, pathToStarterRepo, files
     path = file.path(tempdir(),repo)
     dir.create(path, recursive=TRUE)
     
-    local_repo = clone(org_url, path, progress=TRUE,
+    local_repo = git2r::clone(org_url, path, progress=TRUE,
         credentials = cred_user_pass(gh.user.name, gh.passwd))
     files = list.files(pathToStarterRepo)
     anyFiles = (files %in% filesToCopy)
@@ -49,11 +52,11 @@ addFiles2Repos <- function(repo.prefix, commit.message, pathToStarterRepo, files
       for(file in files)
       {
         file.copy(paste0(pathToStarterRepo, file), path, overwrite = TRUE)
-        add(local_repo, basename(file))
+        git2r::add(local_repo, basename(file))
       }
       
-      commit(local_repo, commit.message)
-      push(local_repo, credentials = cred_user_pass(gh.user.name,gh.passwd))
+      git2r::commit(local_repo, commit.message)
+      git2r::push(local_repo, credentials = cred_user_pass(gh.user.name,gh.passwd))
     })
     
     unlink(path, recursive=TRUE)
@@ -68,7 +71,7 @@ createTeamsAndRepos <- function(github.accounts, assigned.team.number, prefix,
                                 org.name = org_name, 
                                 token.path = token_path){
   token = readLines(token.path)
-  exist.repos = gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
+  exist.repos = gh::gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
   exist.repo.names = sapply(exist.repos, function(x) x$name)
   starter.repo = grepl(paste0(prefix, starter.repo.suffix), exist.repo.names)
   if(any(grepl(prefix, exist.repo.names[!starter.repo]))){
@@ -84,7 +87,7 @@ createTeamsAndRepos <- function(github.accounts, assigned.team.number, prefix,
     cat("Creating ", repo_name, " for ",team," (", team_ids[team],")\n",sep="")
     
     try({
-      gh("POST /orgs/:org/repos", 
+      gh::gh("POST /orgs/:org/repos", 
          org = org.name,
          name=repo_name, private=TRUE, team_id=team_ids[team], 
          auto_init=TRUE, gitignore_template="R",
@@ -94,7 +97,7 @@ createTeamsAndRepos <- function(github.accounts, assigned.team.number, prefix,
     Sys.sleep(2)
     
     try({
-      gh("PUT /teams/:id/repos/:org/:repo", 
+      gh::gh("PUT /teams/:id/repos/:org/:repo", 
          id = team_ids[team], org = org.name, repo = repo_name,
          permission="push",
          .token=token)
@@ -111,7 +114,7 @@ createTeams <- function(github.accounts, assigned.team.number, team.prefix,
                         token.path = token_path){
   
   token = readLines(token.path)
-  exist.teams = gh("/orgs/:org/teams", org = org.name, 
+  exist.teams = gh::gh("/orgs/:org/teams", org = org.name, 
                    .token = token, .limit=Inf) # gets all team names from github
   exist.ids = sapply(exist.teams, function(x) x$id)
   names(exist.ids) = sapply(exist.teams, function(x) x$name)
@@ -129,7 +132,7 @@ createTeams <- function(github.accounts, assigned.team.number, team.prefix,
     Sys.sleep(0.2)
     
     cat("Adding ", team, "...\n", sep = "")
-    gh(
+    gh::gh(
       "POST /orgs/:org/teams",
       org = org.name,
       name = team,
@@ -138,7 +141,7 @@ createTeams <- function(github.accounts, assigned.team.number, team.prefix,
     )
   }
   
-  teams = gh("/orgs/:org/teams", org = org.name, 
+  teams = gh::gh("/orgs/:org/teams", org = org.name, 
              .token = token, .limit=Inf) # gets all team names from github
   team_ids = sapply(teams, function(x) x$id)
   names(team_ids) = sapply(teams, function(x) x$name) # names them
@@ -172,10 +175,10 @@ grab_repos <- function(repo_pattern, targetpath="./", verbose=TRUE,
   
   token = readLines(token.path)
   
-  exist.repos = gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
+  exist.repos = gh::gh("/orgs/:org/repos", org = org.name, .token = token, .limit=Inf) 
   exist.repo.names = sapply(exist.repos, function(x) x$name)
   
-  selected_repos = str_detect(exist.repo.names,repo_pattern) %>% exist.repo.names[.]
+  selected_repos = stringr::str_detect(exist.repo.names,repo_pattern) %>% exist.repo.names[.]
   
   i = 0
   for(repo in selected_repos){
@@ -186,7 +189,7 @@ grab_repos <- function(repo_pattern, targetpath="./", verbose=TRUE,
     
     path = file.path(tempdir(),repo)
     dir.create(path,recursive = TRUE)
-    local_repo = clone(org_url, path, progress=TRUE,
+    local_repo = git2r::clone(org_url, path, progress=TRUE,
                        credentials = cred_user_pass(gh.user.name, gh.passwd))
     if(!is.null(ignore_files)) system(paste('rm', ignore_files))
     system(paste('mv', path, targetpath))
@@ -204,7 +207,7 @@ knit_rmds <- function(local_path, ignore_file = NULL){
     try({
       rmds = list.files(repo, pattern="[Rr]md$")
       if(!is.null(ignore_file)){
-        skip = str_detect(rmds, ignore_file)
+        skip = stringr::str_detect(rmds, ignore_file)
         rmds = rmds[!skip]
       }
       path_to_rmds = paste0(repo, '/', rmds)

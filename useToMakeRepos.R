@@ -1,5 +1,5 @@
 
-path_to_starter = "../HW1_Team0/"
+path_to_starter = "../HW2_Team0/"
 files_vector = c('.gitignore','README.md','hw1.Rmd')
 commit_message = 'Added starter code'
 starter_suffix = '0'
