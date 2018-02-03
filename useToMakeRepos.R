@@ -1,6 +1,6 @@
 
-path_to_starter = "../HW2_Team0/"
-files_vector = c('.gitignore','README.md','hw1.Rmd')
+path_to_starter = "../HW3_Team0/"
+files_vector = c('.gitignore','README.md','hw3.Rmd')
 commit_message = 'Added starter code'
 starter_suffix = '0'
 your_gh_username = 'dajmcdon'
