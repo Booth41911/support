@@ -9,11 +9,11 @@ January,30,Tuesday,TRUE,lec05,regression issues part I,AEPV 2
 February,1,Thursday,FALSE,,,,HW 2 due
 February,6,Tuesday,TRUE,lec06,model selection,AEPV 3 (ISL 5.1)
 February,8,Thursday,FALSE
-February,13,Tuesday,FALSE,lec07,bootstrap and simulation,"AEPV 5,6 (not 6.4.2) (ISL 5.2)"
-February,15,Thursday,FALSE,,,,"HW 3 due, Exam 1 out"
-February,20,Tuesday,FALSE,lec08,smoothing,AEPV 4
-February,22,Thursday,FALSE,,,,"Exam 1 due"
-February,27,Tuesday,FALSE,lec09,regression issues part II,AEPV 7
+February,13,Tuesday,FALSE,lec07,smoothing,AEPV 4
+February,15,Thursday,FALSE,,,,
+February,20,Tuesday,FALSE,lec08,bootstrap and simulation,"AEPV 5,6 (not 6.4.2) (ISL 5.2)","HW 3 due, Exam 1 out"
+February,22,Thursday,FALSE,,,,
+February,27,Tuesday,FALSE,lec09,regression issues part II,AEPV 7,"Exam 1 due"
 March,1,Thursday,FALSE,
 March,6,Tuesday,FALSE,lec10,additive models,AEPV 9 (ISL 7.1-7.3)
 March,8,Thursday,FALSE,,,,"HW 4 due, PC 2"
